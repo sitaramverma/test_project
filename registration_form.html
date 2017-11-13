@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+	<title>Registration Form</title>
+	<meta charset="utf-8">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+	<script>
+		
+	$(function () { 
+
+		$("name_err_msg").hide();
+		$("password_err_msg").hide();
+		$("retypepass_err_msg").hide();
+		$("#mobile_err_msg").hide();
+		$("#pincode_err_msg").hide();
+		$("#address_err_msg").hide();
+		$("#email_err_msg").hide();
+		$("#salary_err_msg").hide();
+		$("#gender_err_msg").hide();
+		$("#sports_err_msg").hide();
+
+		var	err_name =false;
+		var	err_password = false;
+		var err_retypepass = false;
+		var err_mobile =false;
+		var err_pincode =false;
+		var err_address =false;
+		var err_email =false;
+		var err_salary =false;
+		var err_gender = false;
+		var	err_sports = false;
+
+		
+		$("#nameval").blur(function () {
+			check_Name();
+		});
+
+		$("#passwordval").blur(function () {
+			check_Password();
+		});
+
+		$("#retypePassVal").blur(function () {
+			check_Retype_Password();
+		});
+
+		$("#mobileval").blur(function(){
+			check_Mobile();
+		});
+
+		$("#pincodeval").focusout(function(){
+			check_Pincode();
+		});
+
+		$("#addressval").focusout(function(){
+			check_Address();
+		});
+
+		$("#emailval").focusout(function(){
+			check_Email();
+		});
+
+		$("#salaryval").focusout(function(){
+			check_Salary();
+		});
+
+		$("input[name=gendertype]").bind("click", function () {
+			check_Gender();
+		});
+
+		$("input[name=sports]").bind("click", function () {
+			check_Sports();
+		});
+
+		function check_Sports() {
+			if($("#malesports:checked, #femalesports:checked").length > 0 ){
+				$("#sports_err_msg").hide();
+			}
+			else {
+				$("#sports_err_msg").html("Please select at least one sport");
+				$("#sports_err_msg").show();
+				err_sports = true;
+			}
+		}
+		
+		function check_Gender() {
+			if ($("#gender:checked").length > 0) {
+				
+				$("#gender_err_msg").hide();
+
+				if($('input[name=gendertype]:checked').val() == "male"){
+		
+						$("#femalesports").hide();
+						$("#malesports").show();
+						
+			
+						     $('#femalesports :checked').each(function() {
+						      $(this).prop('checked',false);;
+						     });
+            			
+					  }
+
+				if($('input[name=gendertype]:checked').val() == "female"){
+						
+						$("#malesports").hide();
+						$("#femalesports").show();
+
+						$('#malesports :checked').each(function() {
+						    $(this).prop('checked',false);;
+						});
+					
+				}
+				
+				if($('input[name=gendertype]:checked').val() == "other"){
+						
+						$("#malesports").show();
+						$("#femalesports").show();
+
+						$('#malesports :checked').each(function() {
+						    $(this).prop('checked',false);;
+						});
+
+						 $('#femalesports :checked').each(function() {
+						      $(this).prop('checked',false);;
+						     });
+				}
+			}
+			else{
+				$("#gender_err_msg").html("Please choose gender");
+				$("#gender_err_msg").show();
+				err_gender = true;
+			}
+		}
+
+		function check_Name() {
+			var name = $("#nameval").val();
+			var pattern = /^[a-zA-Z ]{4,25}$/; 
+
+			if( pattern.test(name) ) {
+				$("#name_err_msg").hide();
+			}
+			else{
+
+				$("#name_err_msg").text("Please enter valid name");
+				$("#name_err_msg").show();
+				err_name = true;
+			}
+		}
+
+		function check_Password() {
+			var passLength = $("#passwordval").val().length;
+			var passwordValue = $("#passwordval").val();
+			var pattern = /^.*(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%&]).*$/;
+
+			if (pattern.test(passwordValue)) {
+				$("#password_err_msg").hide();
+			}
+			else{
+				$("#password_err_msg").html("Password must be at least 8 characters. <br> At least 1 number, 1 lowercase, 1 uppercase letter. <br> At least 1 special character from @#$%& ");
+				$("#password_err_msg").show();
+				err_password = true;
+			}
+		}
+
+		function check_Retype_Password() {
+			var originalPass = $("#passwordval").val();
+		
+			var retypepassword = $("#retypePassVal").val();
+		
+			if (originalPass === retypepassword && retypepassword != '') {
+				$("#retypepass_err_msg").hide();
+			}
+			else{
+				$("#retypepass_err_msg").html("Password does not matched");
+				$("#retypepass_err_msg").show();
+				err_retypepass = true;
+			}
+		}
+
+		function check_Mobile() {
+		
+			var mobileValue = $("#mobileval").val();
+			var pattern = /^[789]\d{9}$/;
+			//$.isNumeric(mobileValue) && mobileLength == 10
+			if ( pattern.test(mobileValue)) {	
+				$("#mobile_err_msg").hide();
+			}
+			else{
+				$("#mobile_err_msg").html("Enter valid 10 digit mobile number");
+				$("#mobile_err_msg").show();
+				err_mobile = true;
+			}
+		}
+
+		function check_Pincode() {
+			var pattern = /^[1-8][0-9]{5}$/;
+		
+			var pincodeValue = $("#pincodeval").val();
+
+			if ( pattern.test(pincodeValue) ) {	
+				$("#pincode_err_msg").hide();
+			}
+			else{
+
+				$("#pincode_err_msg").html(" Enter valid 6 digit Pincode");
+				$("#pincode_err_msg").show();
+					err_pincode = true;
+			}
+		}
+
+		function check_Address() {
+			var addressLength = $("#addressval").val().length;
+
+			if(addressLength != '' ){
+				$("#address_err_msg").hide();
+			}
+			else{
+				$("#address_err_msg").html("Address field should not be null");
+				$("#address_err_msg").show();
+				err_address = true;
+			}
+		}
+
+		function check_Email() {
+			var email_Reg_Exp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+			var email = $("#emailval").val();
+
+			if (email_Reg_Exp.test(email) ) {
+				$("#email_err_msg").hide();
+			}
+			else{
+				$("#email_err_msg").html("Enter valid email ID");
+				$("#email_err_msg").show();
+				err_email = true;
+			}
+		}
+
+		function check_Salary() {
+			var salary = $("#salaryval").val();
+
+			if ($.isNumeric(salary)) {
+				$("#salary_err_msg").hide();
+			}
+			else{
+				$("#salary_err_msg").html("Enter valid salary in decimal");
+				$("#salary_err_msg").show();
+				err_salary = true;
+			}
+		}
+
+		$('form').submit( function(event) {
+			err_name =false;
+			err_password = false;
+			err_retypepass = false;
+			err_mobile =false;
+			err_pincode =false;
+			err_address =false;
+			err_email =false;
+			err_salary =false;
+			err_gender = false;
+			err_sports = false;
+
+			check_Name();
+			check_Password();
+			check_Retype_Password();
+			check_Mobile();
+			check_Pincode();
+			check_Address();
+			check_Email();
+			check_Salary();
+			check_Gender();
+			check_Sports();
+
+			if (err_mobile == false && err_pincode == false && err_address == false && err_email == false && err_salary == false && err_name == false && err_password == false && err_retypepass == false && err_gender == false && err_sports == false) {
+														
+			return true;	
+
+			}
+			else{
+
+				return false;
+				
+			}	
+	});
+
+});
+
+	</script>
+
+</head>
+
+<body>
+		<form id="register-form" action="registration_form.php" method="post" >
+
+		<label>Name:</label> <input type="text" name="name" id="nameval" placeholder="Enter your good Name">
+		<span id="name_err_msg" style="color : red "></span> <br><br>
+
+		<label>Password:</label> <input type="password" name="password" id="passwordval" placeholder="Password">
+		<span id="password_err_msg" style="color : red "></span> <br><br>
+
+		<label>Retype Password:</label> <input type="password" name="retypepassword" id="retypePassVal" placeholder="Retype Password">
+		<span id="retypepass_err_msg" style="color : red " ></span> <br><br>
+
+		Mobile No.: <input type="text" name="mobile" id="mobileval" maxlength="10" placeholder="Enter mobile no" > 
+		<span id="mobile_err_msg" style="color : red "></span> <br><br>
+
+	    Pincode   : <input type="text" name="pincode" id="pincodeval" maxlength="6" placeholder="Enter your city pincode"> 
+	    <span id="pincode_err_msg" style="color : red "> </span><br><br>
+
+		Address   : <textarea name="address" id="addressval" rows="10" maxlength="50" placeholder="Enter your address here..."></textarea>
+		<span id="address_err_msg" style="color : red "></span> <br><br>
+
+		Email 	  : <input type="text" name="email" id="emailval" placeholder="Enter your email" > 
+		<span id="email_err_msg" style="color : red "></span> <br><br>
+
+		Salary	  : <input type="text" name="salary" id="salaryval" placeholder="Enter salary" > 
+		<span id="salary_err_msg" style="color : red "></span> <br><br>
+
+
+
+		<div> Gender </div>
+		<input type="radio" name="gendertype" id="gender" value="male"> Male
+		<input type="radio" name="gendertype" id="gender" value="female"> Female
+		<input type="radio" name="gendertype" id="gender" value="other"> Other
+		<span id="gender_err_msg" style="color : red "></span>
+		<br><br>
+
+		<div>Please select every sport that you play.</div>
+		<div id="malesports">
+			<input type="checkbox" name="sports[]" id="malesports" value="soccer" > Soccer <br>
+			<input type="checkbox" name="sports[]" id="malesports" value="football"> Football <br>
+		</div>
+
+		<div id="femalesports">
+			<input type="checkbox" name="sports[]" id="femalesports" value="baseball" > Baseball <br>
+			<input type="checkbox" name="sports[]" id="femalesports" value="basketball"> Basketball <br>
+		</div>
+
+		<span id="sports_err_msg" style="color : red "></span> <br><br>
+	
+		<input type="submit" value="Submit">
+	</form>
+</body>
+</html>

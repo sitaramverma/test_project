@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>ToDo Application</title>
+	 <script src="/js/angular.js"></script>
+	 <script src= "/js/checklist-model.js"></script>
+</head>
+<body ng-app = "todoApp">
+
+	<div ng-controller = "todoController1" >	
+	
+ <form name="my-form">
+
+ 	<div> Gender </div>
+		<input type="radio" name="gender" ng-model = "user.gender" ng-click = "anyChecked()" value="male" > Male
+		<input type="radio" name="gender" ng-model = "user.gender"  ng-click = "anyChecked()" value="female" > Female
+		<input type="radio" name="gender" ng-model = "user.gender"  ng-click  = "anyChecked()" value="other" > Other
+		
+		<br><br>
+
+		<div>Please select every sport that you play.</div>
+
+
+		<div id="malesports"  ng-hide =" user.gender == 'female'">
+			<input type="checkbox" name="sports" ng-model = "sportsM.soccer" ng-click = "logsoccer()" > Soccer <br>
+			<input type="checkbox" name="sports" ng-model = "sportsM.football" ng-click = "logfootball()"> Football <br>
+		</div>
+
+		<div id="femalesports" ng-hide ="user.gender == 'male'">
+			<input type="checkbox" name="sports" ng-model = "sportsF.baseball" ng-click = "logbaseball()"> Baseball <br>
+			<input type="checkbox" name="sports" ng-model = "sportsF.basketball" ng-click = "logbasketball()"> Basketball <br>
+		</div>
+
+		<input type="submit" value="Submit">
+		
+	</form>
+     </div>
+
+      <script>
+      		angular.module("todoApp", ["checklist-model"])
+      		.controller("todoController1", [ '$scope', function ($scope) {
+
+      // 		$scope.checkFemale = function () {
+
+   			// if($scope.sportsF){
+   			// 	$scope.sportsF.baseball =false;
+   			// 	$scope.sportsF.basketball =false;
+   			// 	console.log($scope.sportsF);
+   			// 	}	
+      // 		};
+
+      // 		$scope.checkMale = function () {
+   		
+   			// if($scope.sportsM){
+   			// 	$scope.sportsM.soccer =false;
+   			// 	$scope.sportsM.football =false;
+   			// 			console.log($scope.sportsF);
+   			// 	}	
+      // 		};
+      		// functin to uncheck other checkboxex
+      		$scope.anyChecked = function () {
+   			
+	   			if($scope.sportsF){
+	   				$scope.sportsF.baseball =false;
+	   				$scope.sportsF.basketball =false;
+	   			}
+				
+				if($scope.sportsM){
+				$scope.sportsM.soccer =false;
+				$scope.sportsM.football =false;
+				}		
+      		};
+
+      			//function to log the checked 
+      		$scope.logsoccer = function() {
+
+      			if($scope.sportsM){
+      				console.log($scope.sportsM);
+      			}
+      			
+      			// angular.forEach($scope.sportsM, function (item) {
+      			// 	console.log("hi");
+		       //      if( item.Selected ){
+		       //      	console.log(item.Selected );
+		       //      }
+		       //  });
+      		}
+
+   		}]);
+
+
+      </script>
+</body>
+</html>

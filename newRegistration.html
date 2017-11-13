@@ -1,0 +1,61 @@
+<html ng-app="myApp">
+  <head>  
+    <title>Form Demo</title>  
+    <style>body{font-family:"Arial";background-color:#E2E2DC}
+  	input.ng-invalid.ng-touched {border: 1px solid red; 	
+    </style>
+
+    <script src="/js/angular.js"></script>
+  	<script src="/js/angular-messages.js"></script>
+
+  </head>
+  <body ng-controller="AppController as ctrl">
+       
+      	<form name="form" ng-submit="ctrl.submit()" novalidate="">
+        
+        <input type="text"  name="nameF" ng-model="ctrl.user.nameF" placeholder="Name" required ng-minlength="3" ng-maxlength="15"/>
+
+       <div ng-messages="form.nameF.$dirty && form.nameF.$error">
+	        <p ng-message="required">Your name is required.</p>
+	        <p ng-message="minlength">Your name is too short.</p>
+	        <p ng-message="maxlength">Your name is too long.</p>
+    	</div> <br>
+
+        <input type="password" name="password" ng-model="ctrl.user.password" ng-pattern="/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/" placeholder="password" required/>
+          
+        <div ng-messages="form.password.$dirty && form.password.$error">
+	        <p ng-message="required">Password is required.</p>
+	        <p ng-message="pattern">Invalid password.</p>
+    	</div> <br>
+
+        <input type="email"  name="email" ng-model="ctrl.user.email" ng-pattern= "/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/" placeholder="Email" required/>
+        
+        <div ng-messages="form.email.$dirty && form.email.$error">
+	        <p ng-message="required">Email is required.</p>
+	        <p ng-message="pattern">Invalid email.</p>
+    	</div> <br>
+
+           <input type="text" name="mobile" ng-model = "ctrl.user.mobile" ng-pattern="/^[789]\d{9}$/" placeholder="Mobile" maxlength="10" np-maxlength = "10" required>
+
+           <div ng-messages="form.mobile.$dirty && form.mobile.$error">
+	        <p ng-message="required">Mobile field is required</p>
+	        <p ng-message="pattern">Enter Valid 10 digit mobile number.</p>
+    	</div> <br>    
+
+          <input type="submit" value="Submit">
+
+      </form>
+
+      </script>  
+     
+      <script>
+          angular.module('myApp', ['ngMessages'])
+          .controller('AppController', function() {
+             
+              this.submit = function() {
+              	
+            };
+      });
+  </script>
+  </body>
+</html>
